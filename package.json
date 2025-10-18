@@ -1,0 +1,25 @@
+{
+  "name": "void-set",
+  "version": "0.0.1",
+  "description": "Add java style sets to javascript",
+  "keywords": [
+    "set",
+    "void",
+    "array"
+  ],
+  "homepage": "https://github.com/JS-Void-Packages/void-set#readme",
+  "bugs": {
+    "url": "https://github.com/JS-Void-Packages/void-set/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JS-Void-Packages/void-set.git"
+  },
+  "license": "MIT",
+  "author": "Mrthomas20121",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
