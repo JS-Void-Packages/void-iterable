@@ -1,10 +1,10 @@
 {
   "name": "void-set",
   "version": "0.0.1",
-  "description": "Add java style sets to javascript",
+  "description": "Add java style sets and lists to javascript",
   "keywords": [
     "set",
-    "void",
+    "list",
     "array"
   ],
   "homepage": "https://github.com/JS-Void-Packages/void-set#readme",
@@ -17,9 +17,17 @@
   },
   "license": "MIT",
   "author": "Mrthomas20121",
-  "type": "commonjs",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "tsc -p ./tsconfig.json",
+    "start": "node ./dist/tests/listTest.js"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
+  },
+  "dependencies": {
+    "typescript": "^6.0.2"
   }
 }

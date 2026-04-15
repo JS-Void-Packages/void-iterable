@@ -1,7 +1,7 @@
-# void-list
-Add Java Style Sets to Javascript
+# void-iterable
+Add Java Style Sets, Lists and Map to Javascript
 ## Instalation
-`npm install void-set`
+`npm install void-iterable`
 ## Example
 ```js
 ```
