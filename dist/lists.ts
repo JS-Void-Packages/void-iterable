@@ -1,4 +1,4 @@
-import { AbstractIterator, IndexOutOfBoundError } from "./index.js";
+import { AbstractIterator, IndexOutOfBoundError } from "./iterator/iterators.js";
 
 export class List<T> extends AbstractIterator<T> {
     
