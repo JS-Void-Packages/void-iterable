@@ -1,4 +1,28 @@
-export abstract class AbstractSet<T> {
+export class BaseIterableIterator<T> implements IterableIterator<T> {
+    private values: T[];
+    private n = 0;
+    
+    constructor(values: T[]) {
+        this.values = values;
+    }
+    
+    [Symbol.iterator](): IterableIterator<T> {
+        return this;
+    }
+    next(...[value]: [] | [any]): IteratorResult<T, any> {
+        let vals = this.values;
+        if(this.n < vals.length) {
+            return { value: vals[this.n++], done: false };
+        } 
+        else {
+            this.n = 0;
+            return { value:undefined, done: true };
+        }
+    }
+    
+}
+
+export abstract class AbstractIterator<T> implements Iterable<T> {
     protected values: T[] = [];
 
     /**
@@ -14,172 +38,166 @@ export abstract class AbstractSet<T> {
     public abstract remove(index: number): void;
 
     /**
-     * Add all values to the set
-     * @param values 
+     * Returns true if this iterator contains the specified element.
+     * @param value 
+     * @returns 
      */
-    public addAll(...values: T[]) {
-        for(let value of values) {
+    public contains(value: T): boolean {
+        let r = false;
+        for(let v of this.values) {
+            if(v === value || v == value) {
+                r = true;
+                break;
+            }
+        }
+        return r;
+    }
+
+    /**
+     * Returns true if this iterator contains all of the values in the specified iterable.
+     * @param iterable 
+     * @returns 
+     */
+    public containsAll(iterable: Iterable<T>): boolean {
+        let r = true;
+        for(let v of iterable) {
+            if(!this.contains(v)) {
+                r = false;
+                break;
+            }
+        }
+        return r;
+    }
+
+    /**
+     * Remove all the elements in this iterable
+     */
+    public clear(): void {
+        this.values = [];
+    }
+
+    /**
+     * Return the first element that match the index.
+     * @param index positive number
+     * @returns 
+     */
+    public get(index: number): T | undefined {
+
+        if(index>this.values.length) {
+            throw new IndexOutOfBoundError('Index provided is supperior than the length of this iterator');
+        }
+
+        let returnedValue = undefined;
+        for(let i = 0; i<this.values.length; i++) {
+            let value = this.values[i];
+            if(index == i) {
+                return value;
+            }
+        }
+
+        return returnedValue;
+    }
+
+    /**
+     * Replaces the element at the specified position in this iterable with the specified element
+     * @param index positive number
+     * @param value value
+     * @returns 
+     */
+    public set(index: number, value: T): void {
+        if(index>this.values.length) {
+            throw new IndexOutOfBoundError('Index provided is supperior than the length of this iterator');
+        }
+        this.values[index] = value;
+    }
+
+    /**
+     * Returns the index of the first occurrence of the specified element in this iterable, or -1 if this iterable does not contain the element.
+     * @param value 
+     */
+    public indexOf(value: T): number {
+        let index = -1;
+        for(let i = 0; i<this.values.length; i++) {
+            let v = this.values[i];
+            if(v === value || v == value) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    /**
+     * Returns the index of the last occurrence of the specified element in this iterable, or -1 if this iterable does not contain the element.
+     * @param value 
+     */
+    public lastIndexOf(value: T): number {
+        let index = -1;
+        for(let i = 0; i<this.values.length; i++) {
+            let v = this.values[i];
+            if(v === value || v == value) {
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    /**
+     * Add all values to the iterable
+     * @param v 
+     */
+    public addAll(v: Iterable<T>) {
+        for(let value of v) {
             this.add(value);
         }
     }
 
     /**
-     * Throw an duplicate element error
-     */
-    protected duplicateError(): void {
-        throw new RangeError('Set cannot contains duplicate elements!');
-    }
-
-    /**
-     * Get all of the values from the set as an array
+     * Returns all the values in this iterable as array
      * @returns 
      */
-    public getElements() : T[] {
+    public toArray() : T[] {
         return this.values;
     }
 
-    [Symbol.iterator]() {
-        var index = -1;
-        var data = this.values;
-
-        return {
-            next: () => ({ value: data[++index], done: !(index in data) }),
-        };
+    [Symbol.iterator](): IterableIterator<T> {
+        return new BaseIterableIterator(this.values);
     }
 
     /**
-     * call the predicate for each elements in the set
+     * call the predicate for each elements in the iterator
      * @param predicate 
      */
-    public abstract forEach(predicate: (element:T, index:number, set:AbstractSet<T>) => void): void;
+    public abstract forEach(predicate: (element:T, index:number, iterator:AbstractIterator<T>) => void): void;
 
     /**
-     * filter elements in the set if they match the predicate
+     * filter elements in the iterator if they match the predicate
      * @param predicate 
      * @returns 
      */
-    public abstract filter(predicate: (element:T, index:number, set:AbstractSet<T>) => boolean): AbstractSet<T>;
+    public abstract filter(predicate: (element:T, index:number) => boolean): AbstractIterator<T>;
+
+    public abstract map<B>(predicate: (element:T, index:number) => B): AbstractIterator<B>;
+
+    /**
+     * Remove any values that match the predicate
+     * @returns the removed values
+     */
+    public abstract removeIf(predicate: (element:T, index:number) => boolean): AbstractIterator<T>;
     
     public isImmutable(): boolean {
         return false;
     }
-}
 
-export class JavaSet<T> extends AbstractSet<T> {
-
-    /**
-     * Return a new immutable set
-     * @param values 
-     * @returns 
-     */
-    public static immutable<T>(values: Iterable<T>): JavaSet<T> {
-        return new ImmutableJavaSet(values);
-    }
-
-    public static of<T>(...values: T[]): JavaSet<T> {
-        let set = new JavaSet<T>();
-
-        for(let value of values) {
-            set.add(value);
-        }
-
-        return set;
-    }
-
-    public static ofIterable<T>(values: Iterable<T>): JavaSet<T> {
-        let set = new JavaSet<T>();
-
-        for(let value of values) {
-            set.add(value);
-        }
-
-        return set;
-    }
-
-    public add(value: T): void {
-        if(this.values.includes(value)) {
-           this.duplicateError(); 
-        }
-        else {
-            this.values.push(value);
-        }
-    }
-
-    public remove(index: number): void {
-        this.values.splice(index, 1);
-    }
-
-    /**
-     * call the predicate for each elements in the set
-     * @param predicate 
-     */
-    forEach(predicate: (element:T, index:number, set:JavaSet<T>) => void) {
-        for (let i = 0; i < this.values.length; i++) {
-            predicate(this.values[i], i, this);
-        }
-    }
-
-    /**
-     * filter elements in the set if they match the predicate
-     * @param predicate
-     * @override
-     * @returns 
-     */
-    filter(predicate: (element:T, index:number, set:JavaSet<T>) => boolean): JavaSet<T> {
-        let set = new JavaSet<T>();
-        for (let i = 0; i < this.values.length; i++) {
-            let check = predicate(this.values[i], i, this);
-            if (check) {
-                set.add(this.values[i]);
-            }
-        }
-        return set;
+    public toJson(): object {
+        return this.values;
     }
 }
 
-export class ImmutableJavaSet<T> extends JavaSet<T> {
-
-    constructor(values: Iterable<T>) {
-        super();
-
-        for(let value of values) {
-            if(this.values.includes(value)) {
-                this.duplicateError();
-            }
-            this.values.push(value);
-        }
-
-    }
-
-    public add(value: T): void {}
-
-    public remove(index: number): void {}
-
-    forEach(predicate: (element: T, index: number, set: ImmutableJavaSet<T>) => void): void {
-        for (let i = 0; i < this.values.length; i++) {
-            predicate(this.values[i], i, this);
-        }
-    }
-
-    /**
-     * filter elements in the set if they match the predicate
-     * return a new Immutable set.
-     * @param predicate 
-     * @override
-     * @returns 
-     */
-    filter(predicate: (element: T, index: number, set: ImmutableJavaSet<T>) => boolean): ImmutableJavaSet<T> {
-        let set = new JavaSet<T>();
-        for (let i = 0; i < this.values.length; i++) {
-            let check = predicate(this.values[i], i, this);
-            if (check) {
-                set.add(this.values[i]);
-            }
-        }
-        return new ImmutableJavaSet(set);
-    }
-
-    public isImmutable(): boolean {
-        return true;
+export class IndexOutOfBoundError extends Error {
+    constructor(message?: string) {
+        super(message, {
+            cause: 'IndexOutOfBound'
+        });
     }
 }
