@@ -6,6 +6,18 @@ export declare class List<T> extends AbstractIterator<T> {
      * @returns
      */
     static of<T>(...values: T[]): ImmutableList<T>;
+    /**
+     * Create a new Immutable list from an iterable
+     * @param values
+     * @returns
+     */
+    static ofIterable<T>(values: Iterable<T>): ImmutableList<T>;
+    /**
+     * Create a new Immutable list from lists
+     * @param values
+     * @returns
+     */
+    static ofLists<T>(...values: List<T>[]): ImmutableList<T>;
     constructor(values?: Iterable<T>);
     add(value: T): void;
     remove(index: number): void;

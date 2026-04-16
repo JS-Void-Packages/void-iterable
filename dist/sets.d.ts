@@ -6,6 +6,18 @@ export declare class BaseSet<T> extends AbstractIterator<T> {
      * @returns
      */
     static of<T>(...values: T[]): ImmutableSet<T>;
+    /**
+     * Create a new Immutable set from an iterable
+     * @param values
+     * @returns
+     */
+    static ofIterable<T>(values: Iterable<T>): ImmutableSet<T>;
+    /**
+     * Create a new Immutable set from sets
+     * @param values
+     * @returns
+     */
+    static ofSets<T>(...values: BaseSet<T>[]): ImmutableSet<T>;
     constructor(values?: Iterable<T>);
     add(value: T): void;
     remove(index: number): void;
