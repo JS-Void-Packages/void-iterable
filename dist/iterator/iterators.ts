@@ -33,7 +33,7 @@ export abstract class AbstractIterator<T> implements Iterable<T> {
     public abstract add(value: T): void;
 
     /**
-     * Remove an element from the set
+     * Remove an element from the iterable
      * @param index 
      */
     public abstract remove(index: number): void;
@@ -185,6 +185,13 @@ export abstract class AbstractIterator<T> implements Iterable<T> {
      * @returns the removed values
      */
     public abstract removeIf(predicate: (element:T, index:number) => boolean): AbstractIterator<T>;
+
+    /**
+     * @returns the number of values in the iterator
+     */
+    public size(): number {
+        return this.values.length;
+    }
     
     public isImmutable(): boolean {
         return false;
@@ -192,31 +199,6 @@ export abstract class AbstractIterator<T> implements Iterable<T> {
 
     public toJson(): object {
         return this.values;
-    }
-}
-
-export class BaseMapIterator<T> implements MapIterator<T> {
-
-    private values: T[];
-    private n = 0;
-    
-    constructor(values: T[]) {
-        this.values = values;
-    }
-
-    [Symbol.iterator](): MapIterator<T> {
-        return this;
-    }
-
-    next(...[value]: [] | [unknown]): IteratorResult<T, any> {
-        let vals = this.values;
-        if(this.n < vals.length) {
-            return { value: vals[this.n++], done: false };
-        } 
-        else {
-            this.n = 0;
-            return { value:undefined, done: true };
-        }
     }
 }
 
