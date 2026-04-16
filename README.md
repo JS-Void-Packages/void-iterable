@@ -4,7 +4,7 @@ Add Java Style Sets, Lists and Map to Javascript
 `npm install void-iterators`
 ## Example
 ```js
-import { BaseSet, BaseMap, List, Entry } from 'void-iterable';
+import { BaseSet, BaseMap, List, Entry } from 'void-iterators';
 
 let list = List.of(1, 4, 4, 7, 11, 15, 19, 22);
 
