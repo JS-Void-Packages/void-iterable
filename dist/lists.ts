@@ -3,11 +3,11 @@ import { AbstractIterator, IndexOutOfBoundError } from "./iterator/iterators.js"
 export class List<T> extends AbstractIterator<T> {
     
     /**
-     * Create a new Immutable list from an Iterable
+     * Create a new Immutable list from values
      * @param values 
      * @returns 
      */
-    public static of<T>(values: Iterable<T>): ImmutableList<T> {
+    public static of<T>(...values: T[]): ImmutableList<T> {
         return new ImmutableList(values);
     }
 
@@ -72,13 +72,14 @@ export class List<T> extends AbstractIterator<T> {
 
     /**
      * Remove any values that match the predicate
-     * @returns the removed values
+     * @returns any values removed by the predicate
      */
     public removeIf(predicate: (element: T, index: number) => boolean): List<T> {
         let list = new List<T>();
         for (let i = 0; i < this.values.length; i++) {
             let value = this.values[i];
             if(predicate(value, i)) {
+                this.remove(i);
                 list.add(value);
             };
         }
@@ -159,7 +160,7 @@ export class ImmutableList<T> extends List<T> {
                 list.add(value);
             };
         }
-        return ImmutableList.of(list);
+        return new ImmutableList(list);
     }
 
     public isImmutable(): boolean {

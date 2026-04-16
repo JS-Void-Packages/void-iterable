@@ -3,13 +3,13 @@ import { AbstractIterator, IndexOutOfBoundError } from "./iterator/iterators.js"
 export class BaseSet<T> extends AbstractIterator<T> {
     
     /**
-     * Create a new Immutable set from an Iterable
+     * Create a new Immutable list from values
      * @param values 
      * @returns 
      */
-    public static of<T>(values: Iterable<T>): ImmutableSet<T> {
+    public static of<T>(...values: T[]): ImmutableSet<T> {
         return new ImmutableSet(values);
-    }x
+    }
 
     constructor(values?: Iterable<T>) {
         super();
@@ -80,8 +80,9 @@ export class BaseSet<T> extends AbstractIterator<T> {
         for (let i = 0; i < this.values.length; i++) {
             let value = this.values[i];
             if(predicate(value, i)) {
+                this.remove(i);
                 set.add(value);
-            };
+            }
         }
         return set;
     }
@@ -164,7 +165,7 @@ export class ImmutableSet<T> extends BaseSet<T> {
                 set.add(value);
             };
         }
-        return ImmutableSet.of(set);
+        return new ImmutableSet(set);
     }
 
     public isImmutable(): boolean {
