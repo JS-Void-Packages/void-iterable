@@ -5,6 +5,7 @@
   "keywords": [
     "set",
     "list",
+    "map",
     "array"
   ],
   "homepage": "https://github.com/JS-Void-Packages/void-iterable#readme",
@@ -21,8 +22,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "tsc -p ./tsconfig.json",
-    "start": "node ./dist/tests/listTest.js"
+    "prepare": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
