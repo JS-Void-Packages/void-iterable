@@ -11,6 +11,27 @@ export class List<T> extends AbstractIterator<T> {
         return new ImmutableList(values);
     }
 
+    /**
+     * Create a new Immutable list from an iterable
+     * @param values 
+     * @returns 
+     */
+    public static ofIterable<T>(values: Iterable<T>): ImmutableList<T> {
+        return new ImmutableList(values);
+    }
+
+    /**
+     * Create a new Immutable list from lists
+     * @param values 
+     * @returns 
+     */
+    public static ofLists<T>(...values: List<T>[]): ImmutableList<T> {
+        let totalValues = new List<T>();
+        values.forEach(list => totalValues.addAll(list));
+
+        return new ImmutableList(totalValues);
+    }
+
     constructor(values?: Iterable<T>) {
         super();
 

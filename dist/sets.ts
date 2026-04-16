@@ -11,6 +11,27 @@ export class BaseSet<T> extends AbstractIterator<T> {
         return new ImmutableSet(values);
     }
 
+    /**
+     * Create a new Immutable set from an iterable
+     * @param values 
+     * @returns 
+     */
+    public static ofIterable<T>(values: Iterable<T>): ImmutableSet<T> {
+        return new ImmutableSet(values);
+    }
+
+    /**
+     * Create a new Immutable set from sets
+     * @param values 
+     * @returns 
+     */
+    public static ofSets<T>(...values: BaseSet<T>[]): ImmutableSet<T> {
+        let totalValues = new BaseSet<T>();
+        values.forEach(set => totalValues.addAll(set));
+
+        return new ImmutableSet(totalValues);
+    }
+
     constructor(values?: Iterable<T>) {
         super();
 
