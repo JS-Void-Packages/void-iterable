@@ -1,12 +1,11 @@
 import { AbstractIterator } from "./iterator/iterators.js";
 export declare class BaseSet<T> extends AbstractIterator<T> {
     /**
-     * Create a new Immutable set from an Iterable
+     * Create a new Immutable list from values
      * @param values
      * @returns
      */
-    static of<T>(values: Iterable<T>): ImmutableSet<T>;
-    x: any;
+    static of<T>(...values: T[]): ImmutableSet<T>;
     constructor(values?: Iterable<T>);
     add(value: T): void;
     remove(index: number): void;

@@ -13,7 +13,7 @@ export declare abstract class AbstractIterator<T> implements Iterable<T> {
      */
     abstract add(value: T): void;
     /**
-     * Remove an element from the set
+     * Remove an element from the iterable
      * @param index
      */
     abstract remove(index: number): void;
@@ -84,15 +84,12 @@ export declare abstract class AbstractIterator<T> implements Iterable<T> {
      * @returns the removed values
      */
     abstract removeIf(predicate: (element: T, index: number) => boolean): AbstractIterator<T>;
+    /**
+     * @returns the number of values in the iterator
+     */
+    size(): number;
     isImmutable(): boolean;
     toJson(): object;
-}
-export declare class BaseMapIterator<T> implements MapIterator<T> {
-    private values;
-    private n;
-    constructor(values: T[]);
-    [Symbol.iterator](): MapIterator<T>;
-    next(...[value]: [] | [unknown]): IteratorResult<T, any>;
 }
 export declare class IndexOutOfBoundError extends Error {
     constructor(message?: string);

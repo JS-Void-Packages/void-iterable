@@ -1,11 +1,11 @@
 import { AbstractIterator } from "./iterator/iterators.js";
 export declare class List<T> extends AbstractIterator<T> {
     /**
-     * Create a new Immutable list from an Iterable
+     * Create a new Immutable list from values
      * @param values
      * @returns
      */
-    static of<T>(values: Iterable<T>): ImmutableList<T>;
+    static of<T>(...values: T[]): ImmutableList<T>;
     constructor(values?: Iterable<T>);
     add(value: T): void;
     remove(index: number): void;
@@ -24,7 +24,7 @@ export declare class List<T> extends AbstractIterator<T> {
     map<B>(predicate: (element: T, index: number) => B): List<B>;
     /**
      * Remove any values that match the predicate
-     * @returns the removed values
+     * @returns any values removed by the predicate
      */
     removeIf(predicate: (element: T, index: number) => boolean): List<T>;
     /**
