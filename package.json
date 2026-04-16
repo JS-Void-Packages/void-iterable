@@ -1,5 +1,5 @@
 {
-  "name": "void-iterable",
+  "name": "void-iterators",
   "version": "0.0.1",
   "description": "Add java style sets, lists and maps to javascript",
   "keywords": [

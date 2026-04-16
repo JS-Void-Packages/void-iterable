@@ -1,7 +1,7 @@
 # void-iterable
 Add Java Style Sets, Lists and Map to Javascript
 ## Instalation
-`npm install void-iterable`
+`npm install void-iterators`
 ## Example
 ```js
 import { BaseSet, BaseMap, List, Entry } from 'void-iterable';
