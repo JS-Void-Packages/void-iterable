@@ -34,3 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - fixed more typos in readme
 - added changelog
+
+## [0.0.4] - 16-04-2026
+
+### Addded
+- reverse() to reverse the order of files in the list/set
+- copy() to create a new copy of the list/set

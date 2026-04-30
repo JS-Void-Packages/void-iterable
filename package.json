@@ -1,6 +1,6 @@
 {
   "name": "void-iterators",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Add java style sets, lists and maps to javascript",
   "keywords": [
     "set",
@@ -8,13 +8,13 @@
     "map",
     "array"
   ],
-  "homepage": "https://github.com/JS-Void-Packages/void-iterable#readme",
+  "homepage": "https://github.com/JS-Void-Packages/void-iterators#readme",
   "bugs": {
-    "url": "https://github.com/JS-Void-Packages/void-iterable/issues"
+    "url": "https://github.com/JS-Void-Packages/void-iterators/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JS-Void-Packages/void-iterable.git"
+    "url": "git+https://github.com/JS-Void-Packages/void-iterators.git"
   },
   "license": "MIT",
   "author": "Mrthomas20121",
