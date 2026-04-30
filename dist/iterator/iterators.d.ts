@@ -8,6 +8,10 @@ export declare class BaseIterableIterator<T> implements IterableIterator<T> {
 export declare abstract class AbstractIterator<T> implements Iterable<T> {
     protected values: T[];
     /**
+     * Return a new copy of this
+     */
+    abstract copy(): Iterable<T>;
+    /**
      * Add an element to the set
      * @param value
      */
@@ -67,6 +71,11 @@ export declare abstract class AbstractIterator<T> implements Iterable<T> {
      */
     toArray(): T[];
     [Symbol.iterator](): IterableIterator<T>;
+    /**
+     * Reverses the elements in an iterator in place.
+     * This method mutates the iterator and return the reversed iterator.
+     */
+    abstract reverse(): Iterable<T>;
     /**
      * call the predicate for each elements in the iterator
      * @param predicate

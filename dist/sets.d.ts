@@ -19,6 +19,7 @@ export declare class BaseSet<T> extends AbstractIterator<T> {
      */
     static ofSets<T>(...values: BaseSet<T>[]): ImmutableSet<T>;
     constructor(values?: Iterable<T>);
+    copy(): BaseSet<T>;
     add(value: T): void;
     remove(index: number): void;
     /**
@@ -43,11 +44,15 @@ export declare class BaseSet<T> extends AbstractIterator<T> {
      * @returns
      */
     subSet(fromIndex: number, toIndex: number): BaseSet<T>;
+    /**
+     * Reverses the elements in the set in place.
+     * This method mutates the set and return the reversed set.
+     */
+    reverse(): BaseSet<T>;
 }
 export declare class ImmutableSet<T> extends BaseSet<T> {
     constructor(values: Iterable<T>);
-    add(value: T): void;
-    remove(index: number): void;
+    copy(): ImmutableSet<T>;
     forEach(predicate: (element: T, index: number, set: ImmutableSet<T>) => void): void;
     /**
      * filter elements in the set if they match the predicate
@@ -60,4 +65,9 @@ export declare class ImmutableSet<T> extends BaseSet<T> {
     map<B>(predicate: (element: T, index: number) => B): ImmutableSet<B>;
     removeIf(predicate: (element: T, index: number) => boolean): ImmutableSet<T>;
     isImmutable(): boolean;
+    /**
+     * Reverses the elements in the set in place.
+     * This method mutates the set and return the reversed set.
+     */
+    reverse(): BaseSet<T>;
 }

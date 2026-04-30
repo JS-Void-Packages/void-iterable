@@ -19,6 +19,7 @@ export declare class List<T> extends AbstractIterator<T> {
      */
     static ofLists<T>(...values: List<T>[]): ImmutableList<T>;
     constructor(values?: Iterable<T>);
+    copy(): List<T>;
     add(value: T): void;
     remove(index: number): void;
     /**
@@ -47,9 +48,15 @@ export declare class List<T> extends AbstractIterator<T> {
      * @returns
      */
     subList(fromIndex: number, toIndex: number): List<T>;
+    /**
+     * Reverses the elements in the list in place.
+     * This method mutates the list and return the reversed list.
+     */
+    reverse(): List<T>;
 }
 export declare class ImmutableList<T> extends List<T> {
     constructor(values: Iterable<T>);
+    copy(): ImmutableList<T>;
     forEach(predicate: (element: T, index: number, list: ImmutableList<T>) => void): void;
     /**
      * filter elements in the list if they match the predicate
@@ -61,5 +68,10 @@ export declare class ImmutableList<T> extends List<T> {
     filter(predicate: (element: T, index: number) => boolean): ImmutableList<T>;
     map<B>(predicate: (element: T, index: number) => B): ImmutableList<B>;
     removeIf(predicate: (element: T, index: number) => boolean): ImmutableList<T>;
+    /**
+     * Reverses the elements in the list in place.
+     * This method mutates the list and return the reversed list.
+     */
+    reverse(): ImmutableList<T>;
     isImmutable(): boolean;
 }
