@@ -1,4 +1,4 @@
-# void-iterable
+# void-iterators
 Add Java Style Sets, Lists and Map to Javascript
 ## Instalation
 `npm install void-iterators`
