@@ -42,6 +42,10 @@ export class List<T> extends AbstractIterator<T> {
         }
     }
 
+    public copy(): List<T> {
+        return new List(this.values);
+    }
+
     public add(value: T): void {
         if(this.isImmutable()) {
             throw new RangeError('cannot add values to an immutable list!')
@@ -133,12 +137,31 @@ export class List<T> extends AbstractIterator<T> {
 
         return list;
     }
+
+    /**
+     * Reverses the elements in the list in place. 
+     * This method mutates the list and return the reversed list.
+     */
+    public reverse(): List<T> {
+
+        let list = new List<T>();
+
+        for (let i = this.values.length - 1; i >= 0; i--) {
+            list.add(this.values[i]);
+        }
+
+        return list;
+    }
 }
 
 export class ImmutableList<T> extends List<T> {
 
     constructor(values: Iterable<T>) {
         super(values);
+    }
+
+    public copy(): ImmutableList<T> {
+        return new ImmutableList(this.values);
     }
 
     forEach(predicate: (element: T, index: number, list: ImmutableList<T>) => void): void {
@@ -181,6 +204,20 @@ export class ImmutableList<T> extends List<T> {
                 list.add(value);
             };
         }
+        return new ImmutableList(list);
+    }
+
+    /**
+     * Reverses the elements in the list in place. 
+     * This method mutates the list and return the reversed list.
+     */
+    public reverse(): ImmutableList<T> {
+        let list = new List<T>();
+
+        for (let i = this.values.length - 1; i >= 0; i--) {
+            list.add(this.values[i]);
+        }
+
         return new ImmutableList(list);
     }
 

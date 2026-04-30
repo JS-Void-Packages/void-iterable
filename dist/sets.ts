@@ -45,10 +45,14 @@ export class BaseSet<T> extends AbstractIterator<T> {
 
     }
 
+    public copy(): BaseSet<T> {
+        return new BaseSet(this.values);
+    }
+
     public add(value: T): void {
         if(!this.values.includes(value)) {
             if(this.isImmutable()) {
-                throw new RangeError('cannot add values to an immutable set!')
+                throw new RangeError('cannot add values to an immutable set!');
             }
             this.values.push(value);
         }
@@ -56,7 +60,7 @@ export class BaseSet<T> extends AbstractIterator<T> {
 
     public remove(index: number): void {
         if(this.isImmutable()) {
-                throw new RangeError('cannot remove values from an immutable set!')
+                throw new RangeError('cannot remove values from an immutable set!');
         }
         this.values.splice(index, 1);
     }
@@ -134,12 +138,31 @@ export class BaseSet<T> extends AbstractIterator<T> {
 
         return set;
     }
+
+    /**
+     * Reverses the elements in the set in place. 
+     * This method mutates the set and return the reversed set.
+     */
+    public reverse(): BaseSet<T> {
+
+        let set = new BaseSet<T>();
+
+        for (let i = this.values.length - 1; i >= 0; i--) {
+            set.add(this.values[i]);
+        }
+
+        return set;
+    }
 }
 
 export class ImmutableSet<T> extends BaseSet<T> {
 
     constructor(values: Iterable<T>) {
         super(values);
+    }
+
+    public copy(): ImmutableSet<T> {
+        return new ImmutableSet(this.values);
     }
 
     public add(value: T): void {}
@@ -191,5 +214,20 @@ export class ImmutableSet<T> extends BaseSet<T> {
 
     public isImmutable(): boolean {
         return true;
+    }
+
+    /**
+     * Reverses the elements in the set in place. 
+     * This method mutates the set and return the reversed set.
+     */
+    public reverse(): BaseSet<T> {
+
+        let set = new Set<T>();
+
+        for (let i = this.values.length - 1; i >= 0; i--) {
+            set.add(this.values[i]);
+        }
+
+        return new ImmutableSet(set);
     }
 }
