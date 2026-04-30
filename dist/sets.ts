@@ -165,10 +165,6 @@ export class ImmutableSet<T> extends BaseSet<T> {
         return new ImmutableSet(this.values);
     }
 
-    public add(value: T): void {}
-
-    public remove(index: number): void {}
-
     forEach(predicate: (element: T, index: number, set: ImmutableSet<T>) => void): void {
         for (let i = 0; i < this.values.length; i++) {
             predicate(this.values[i], i, this);
