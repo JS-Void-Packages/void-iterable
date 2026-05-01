@@ -37,6 +37,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.4] - 16-04-2026
 
-### Addded
+### Added
 - reverse() to reverse the order of files in the list/set
 - copy() to create a new copy of the list/set
+
+## [0.0.5] - 01-05-2026
+
+### Added
+- sort(predicate) to sort the list/set(works exactly like the array implementation);
+- shuffle() to shuffle the items in the list/set/map
+- getRandomItem() to get a random item from the list/set
+
+### Fixed
+- fixed typos in changelog
