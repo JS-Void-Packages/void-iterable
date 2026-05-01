@@ -77,6 +77,26 @@ export declare abstract class AbstractIterator<T> implements Iterable<T> {
      */
     abstract reverse(): Iterable<T>;
     /**
+     * Sorts an iterable in place.
+     * This method mutates the iterable and returns a reference to the same iterable.
+     * @param predicate Function used to determine the order of the elements. It is expected to return
+     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
+     * value otherwise. If omitted, the elements are sorted in ascending, UTF-16 code unit order.
+     * ```ts
+     * list.sort((a, b) => a - b)
+     * ```
+     */
+    sort(predicate?: (a: T, b: T) => number): this;
+    /**
+     * Shuffle the iterable values in place
+     */
+    shuffle(): this;
+    /**
+     * Get a random item from the iterable
+     * @returns
+     */
+    getRandomItem(): T;
+    /**
      * call the predicate for each elements in the iterator
      * @param predicate
      */

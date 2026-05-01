@@ -97,6 +97,14 @@ export abstract class AbstractMap<A, B> implements Iterable<Entry<A, B>> {
     }
 
     /**
+     * Shuffle the iterable values in place
+     */
+    public shuffle(): this {
+        this.data.shuffle();
+        return this;
+    }
+
+    /**
      * Returns the index for that key in the map, returns -1 if not found
      * @param key 
      * @returns 

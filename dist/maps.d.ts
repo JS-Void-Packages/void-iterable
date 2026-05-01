@@ -42,6 +42,10 @@ export declare abstract class AbstractMap<A, B> implements Iterable<Entry<A, B>>
      */
     getEntryOrDefault(key: A, defaultEntry: Entry<A, B>): Entry<A, B>;
     /**
+     * Shuffle the iterable values in place
+     */
+    shuffle(): this;
+    /**
      * Returns the index for that key in the map, returns -1 if not found
      * @param key
      * @returns
